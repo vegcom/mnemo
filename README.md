@@ -14,6 +14,10 @@ Provides a presence wrapper
 > **🏗️ Design overview**
 > [docs/DESIGN.md](docs/DESIGN.md)
 
+> [!NOTE]
+> **📖 AI-powered documentation**
+> [deepwiki.com/vegcom/mnemo](https://deepwiki.com/vegcom/mnemo)
+
 ```mermaid
 graph LR
     subgraph clients [client devices]
