@@ -16,7 +16,8 @@ Provides a presence wrapper
 
 > [!NOTE]
 > **📖 AI-powered documentation**
-> [deepwiki.com/vegcom/mnemo](https://deepwiki.com/vegcom/mnemo)
+> 
+>  [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/vegcom/mnemo) 
 
 ```mermaid
 graph LR
