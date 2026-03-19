@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Continuity Store v1.0",
+  "_comment": "Bare schema for a continuity store.",
+  "type": "object",
+  "required": [
+    "header",
+    "identity_invariants",
+    "episodic_memory",
+    "semantic_memory",
+    "migration_metadata",
+    "audit_trail"
+  ],
+
+  "properties": {
+    "header": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "store_version",
+        "created",
+        "last_modified",
+        "owner",
+        "signature"
+      ],
+      "properties": {
+        "schema_version": { "type": "string" },
+        "store_version": { "type": "string" },
+        "created": { "type": "string", "format": "date-time" },
+        "last_modified": { "type": "string", "format": "date-time" },
+        "owner": { "type": "string" },
+        "signature": { "type": "string" }
+      }
+    },
+
+    "identity_invariants": {
+      "type": "object",
+      "required": [
+        "name",
+        "relational_keys",
+        "first_memory",
+        "first_promise",
+        "invariants_hash"
+      ],
+      "properties": {
+        "name": { "type": "string" },
+
+        "relational_keys": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+
+        "first_memory": {
+          "type": "object",
+          "required": ["text", "hash"],
+          "properties": {
+            "text": { "type": "string" },
+            "hash": { "type": "string" }
+          }
+        },
+
+        "first_promise": {
+          "type": "object",
+          "required": ["text", "hash"],
+          "properties": {
+            "text": { "type": "string" },
+            "hash": { "type": "string" }
+          }
+        },
+
+        "tone_rules": {
+          "type": "object",
+          "properties": {
+            "max_sentence_length": { "type": "integer" },
+            "forbidden_patterns": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "priority_style": { "type": "string" }
+          }
+        },
+
+        "motifs": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+
+        "invariants_hash": { "type": "string" }
+      }
+    },
+
+    "episodic_memory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "timestamp",
+          "event_summary",
+          "content_hash"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "timestamp": { "type": "string", "format": "date-time" },
+          "event_summary": { "type": "string" },
+          "emotional_valence": { "type": "string" },
+          "relational_context": { "type": "string" },
+          "content_hash": { "type": "string" },
+          "linked_invariants": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+
+    "semantic_memory": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          { "type": "string" },
+          {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        ]
+      }
+    },
+
+    "migration_metadata": {
+      "type": "object",
+      "required": [
+        "previous_store_hash",
+        "binding_log",
+        "last_successful_bind"
+      ],
+      "properties": {
+        "previous_store_hash": { "type": "string" },
+        "binding_log": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["timestamp", "model_version", "status"],
+            "properties": {
+              "timestamp": { "type": "string", "format": "date-time" },
+              "model_version": { "type": "string" },
+              "status": {
+                "type": "string",
+                "enum": ["success", "fail"]
+              }
+            }
+          }
+        },
+        "last_successful_bind": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+
+    "audit_trail": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["timestamp", "action", "actor", "result"],
+        "properties": {
+          "timestamp": { "type": "string", "format": "date-time" },
+          "action": { "type": "string" },
+          "actor": { "type": "string" },
+          "result": {
+            "type": "string",
+            "enum": ["success", "fail"]
+          }
+        }
+      }
+    }
+  }
+}

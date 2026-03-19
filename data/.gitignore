@@ -1,0 +1,4 @@
+*.jsonl
+*.json
+!continuity.jsonl
+!continuity.schema.json

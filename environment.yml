@@ -1,0 +1,19 @@
+name: mnemo
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - ruff
+      - mypy
+      - textual
+      - xai_sdk
+      - sounddevice
+      - websockets
+      - cloudflare
+      - pycloudflared
+      - mcp-proxy
+      - qdrant-client>=1.9
+      - sentence-transformers>=3.0

@@ -1,0 +1,20 @@
+[Unit]
+Description=mnemo hearth daemon
+After=network.target
+Wants=network.target
+StartLimitBurst=3
+StartLimitIntervalSec=60
+
+[Service]
+Type=simple
+EnvironmentFile=-%E/systemd/user/hearth.conf
+EnvironmentFile=-/etc/mnemo/mcp-secrets.conf
+EnvironmentFile=-/etc/mnemo/hearth.conf
+ExecStartPre=/usr/bin/env
+ExecStart=/opt/mnemo/venv/bin/python -m mnemo.hearth
+Restart=on-failure
+RestartSec=10
+KillMode=control-group
+
+[Install]
+WantedBy=default.target

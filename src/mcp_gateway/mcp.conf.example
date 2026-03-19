@@ -1,0 +1,17 @@
+# MCP server configuration
+# Copy to mcp.conf, or point MCP_CONFIG_PATH at an alternate location:
+#   MCP_CONFIG_PATH=/opt/cozy/etc/mcp_gateway.conf
+#   MNEMO_GATEWAY_JSON=/opt/cozy/etc/gateway.json  (where gateway.json is written/read)
+# Environment variables are expanded: ${VAR} or ${VAR:-default}
+# MCP exposed to xAI have to be accessable over public internet
+
+[desktop-commander]
+url = http://localhost:${MCP_LOCAL_PORT:-8080}/mcp
+# authorization is injected automatically from MCP_AUTH_TOKEN — no extra_headers needed
+enabled = true
+
+# Example: additional remote MCP server (no local proxy needed)
+# [memory]
+# url = https://my-memory-server.example.com/mcp
+# extra_headers = authorization:${MEMORY_AUTH}
+# enabled = true

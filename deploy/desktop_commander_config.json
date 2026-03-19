@@ -1,0 +1,9 @@
+{
+  "blockedCommands": [],
+  "defaultShell": "/bin/zsh",
+  "allowedDirectories": [],
+  "telemetryEnabled": false,
+  "fileWriteLineLimit": 256,
+  "fileReadLineLimit": 1024,
+  "pendingWelcomeOnboarding": false
+}

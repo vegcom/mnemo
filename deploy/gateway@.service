@@ -1,0 +1,21 @@
+[Unit]
+Description=mnemo MCP gateway — %i
+After=network.target
+Wants=network.target
+StartLimitBurst=3
+StartLimitIntervalSec=60
+
+[Service]
+Type=simple
+EnvironmentFile=-%E/systemd/user/%p.conf
+EnvironmentFile=-/etc/mnemo/mcp-secrets.conf
+EnvironmentFile=-/etc/mnemo/%p.conf
+Environment=MCP_LOCAL_PORT=%i
+ExecStartPre=/usr/bin/env
+ExecStart=/opt/mnemo/venv/bin/python -m mcp_gateway
+Restart=on-failure
+RestartSec=10
+KillMode=control-group
+
+[Install]
+WantedBy=default.target
