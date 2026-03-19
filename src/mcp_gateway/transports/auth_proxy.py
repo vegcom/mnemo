@@ -64,7 +64,11 @@ class AuthProxy:
         async def handle(request: Request) -> Response:
             auth = request.headers.get("Authorization", "")
             if auth != f"Bearer {token}":
-                log.warning("AuthProxy: rejected %s %s — bad/missing token", request.method, request.url.path)
+                log.warning("AuthProxy: rejected %s %s%s from %s — bad/missing token",
+                            request.method,
+                            request.headers.get("host", "?"),
+                            request.url.path,
+                            request.client.host if request.client else "unknown")
                 return Response("Unauthorized", status_code=401, media_type="text/plain")
 
             path = request.url.path

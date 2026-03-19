@@ -92,7 +92,7 @@ class ProxyTransport:
         cmd = [_find_mcp_proxy(), "--port", str(self.port), "--host", self.host,
                "--transport", "streamablehttp", "--", *self.command]
         log.info("Spawning mcp-proxy (stdio→streamablehttp): %s", " ".join(cmd))
-        return subprocess.Popen(cmd, env=os.environ.copy())
+        return subprocess.Popen(cmd, env=os.environ.copy(), stderr=subprocess.PIPE)
 
     def _run(self):
         while not self._stop.is_set():
@@ -100,5 +100,9 @@ class ProxyTransport:
             ret = self._proc.wait()
             if self._stop.is_set():
                 break
+            if self._proc.stderr:
+                err = self._proc.stderr.read().decode("utf-8", errors="replace").strip()
+                if err:
+                    log.error("mcp-proxy stderr (exit %d): %s", ret, err[:500])
             log.warning("mcp-proxy exited (code %d) — restarting in 2 s…", ret)
             time.sleep(2)

@@ -340,6 +340,9 @@ class VoiceSession:
                 "response.output_audio_transcript.delta",
                 # Ping — keep-alive, no action
                 "ping",
+                # xAI plumbing — audio done signal + session config echo, no action needed
+                "response.output_audio.done",
+                "session.updated",
             ):
                 pass  # intentionally ignored — see inline comments above
 

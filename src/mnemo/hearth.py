@@ -354,6 +354,12 @@ class Hearth:
     # ------------------------------------------------------------------ #
 
     async def _on_message(self, writer: asyncio.StreamWriter, content: str, person: str | None = None) -> None:
+        # inject voice context for text messages arriving while voice is still active
+        if self._current_mode == "voice":
+            snippet = self._build_injection("text", "voice", person or "user")
+            if snippet:
+                from xai_sdk.chat import user as _xai_user  # type: ignore
+                self._agent._get_chat().append(_xai_user(snippet))
         # flush pending voice→text injection before first user turn
         if self._injection_pending:
             self._injection_pending = False
@@ -366,9 +372,15 @@ class Hearth:
         _index_turn("user", content, person=person)
         q: queue.Queue[str | None] = queue.Queue()
 
+        def _on_text_tool_call(tool: str, arguments: str) -> None:
+            asyncio.run_coroutine_threadsafe(
+                _send(writer, {"type": "tool_call", "tool": tool, "arguments": arguments}),
+                loop,
+            )
+
         def _run() -> None:
             try:
-                for token in self._agent._stream_sync(content):
+                for token in self._agent._stream_sync(content, on_tool_call=_on_text_tool_call):
                     q.put(token)
             except Exception:
                 log.exception("stream error")

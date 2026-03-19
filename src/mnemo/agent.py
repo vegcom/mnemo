@@ -110,8 +110,12 @@ class Agent():
             self._chat = self.client.chat.create(model=self.model_uri, tools=tools, **kwargs)
         return self._chat
 
-    def _stream_sync(self, message: str):
-        """Sync generator for use in threads (Textual worker)."""
+    def _stream_sync(self, message: str, on_tool_call=None):
+        """Sync generator for use in threads (Textual worker).
+
+        on_tool_call: optional callable(tool_name: str, arguments: str) fired
+                      for each tool call chunk — use to surface calls to the UI.
+        """
         chat = self._get_chat()
         log.info("Starting xAI stream — model=%s", self.model_uri)
         chat.append(user(message))
@@ -122,6 +126,8 @@ class Agent():
             if chunk.tool_calls:
                 for tc in chunk.tool_calls:
                     log.info("Tool call: %s", tc.function.name)
+                    if on_tool_call:
+                        on_tool_call(tc.function.name, tc.function.arguments or "")
         if response is not None:
             for to in response.tool_outputs:
                 msg = to.message
