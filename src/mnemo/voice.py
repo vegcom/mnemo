@@ -37,8 +37,8 @@ def _load_voice_tools() -> list[dict]:
 
     continuity_collection = os.environ.get("MNEMO_CONTINUITY_COLLECTION", "").strip()
     if continuity_collection:
-        log.info("voice collections_search enabled — collection=%s", continuity_collection)
-        tools.append({"type": "collections_search", "collection_ids": [continuity_collection]})
+        log.info("voice file_search enabled — collection=%s", continuity_collection)
+        tools.append({"type": "file_search", "vector_store_ids": [continuity_collection], "max_num_results": 10})
     else:
         log.debug("MNEMO_CONTINUITY_COLLECTION not set — collections_search disabled in voice")
 
