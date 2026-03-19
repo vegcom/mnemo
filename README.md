@@ -47,6 +47,16 @@ graph LR
 
 ```
 
+## Usage & Compliance
+
+mnemo is a user-driven presence wrapper around the official xAI API — not an autonomous agent framework. All operations require explicit user initiation.
+
+- **Data persistence** — any data stored locally (Qdrant, JSONL) is opt-in and fully user-controlled. mnemo does not persist model outputs or conversation content without user consent.
+- **Sessions** — each user and device maintains its own authenticated xAI session. mnemo does not multiplex multiple users through a single identity.
+- **Transport** — Cloudflare tunnels are used for secure inbound transport only. They do not alter authentication or obscure client identity to xAI.
+- **Affiliation** — mnemo is not affiliated with or endorsed by xAI.
+- **Acceptable use** — mnemo is intended for personal assistants, presence, and productivity tooling. It must not be used for scraping, impersonation, or prohibited automation.
+
 ## Troubleshooting
 
 > [!TIP]

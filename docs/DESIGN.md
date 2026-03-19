@@ -7,8 +7,7 @@ For the quick-start ops guide see [QUICK_START.md](./QUICK_START.md).
 
 ## Overview
 
-mnemo is an xAI-hosted agent that runs on the host (Kali Linux) and is reachable from
-anywhere via Cloudflare Tunnel. Two separate subsystems:
+mnemo is a user-driven agent toolkit that runs on the host and connects to xAI via Cloudflare Tunnel. All agent operations require explicit user initiation. Two separate subsystems:
 
 - **mcp_gateway** — exposes local MCP tool servers to xAI via authenticated CF tunnels
 - **mnemo (hearth + app)** — the agent daemon and its frontend client
