@@ -47,15 +47,19 @@ graph LR
 
 ```
 
-## Usage & Compliance
+## Compliance & Safety
 
-mnemo is a user-driven presence wrapper around the official xAI API — not an autonomous agent framework. All operations require explicit user initiation.
+mnemo is a user-driven presence wrapper around the official xAI API. It does not perform autonomous actions, does not self-initiate tasks, and does not invoke tools without explicit user instruction. All operations require clear, intentional user direction.
 
-- **Data persistence** — any data stored locally (Qdrant, JSONL) is opt-in and fully user-controlled. mnemo does not persist model outputs or conversation content without user consent.
-- **Sessions** — each user and device maintains its own authenticated xAI session. mnemo does not multiplex multiple users through a single identity.
-- **Transport** — Cloudflare tunnels are used for secure inbound transport only. They do not alter authentication or obscure client identity to xAI.
-- **Affiliation** — mnemo is not affiliated with or endorsed by xAI.
-- **Acceptable use** — mnemo is intended for personal assistants, presence, and productivity tooling. It must not be used for scraping, impersonation, or prohibited automation.
+mnemo does not alter, mask, or impersonate xAI model identity. All model responses are passed through unmodified, and mnemo does not present itself as an xAI product or service.
+
+mnemo does not store user messages or model outputs without explicit consent. Any persisted data (e.g., via Qdrant) is opt-in, user-controlled, and remains local unless the user explicitly configures otherwise.
+
+Each user/device maintains its own authenticated xAI session. Realtime connections are not shared or multiplexed across clients; every connection corresponds to a single user/device identity.
+
+Cloudflare tunnels are used solely for secure transport and do not obscure client identity or modify authentication.
+
+mnemo must not be used for scraping, impersonation, or prohibited automation. It is a toolkit for building user-directed assistants, not autonomous agents.
 
 ## Troubleshooting
 
