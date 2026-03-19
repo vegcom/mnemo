@@ -106,7 +106,7 @@ def main():
     auth_token = os.getenv("MCP_AUTH_TOKEN", "")
 
     transport = os.getenv("MCP_PROXY_TRANSPORT", "streamablehttp")
-    mcp_path = "/mcp" if transport == "streamablehttp" else "/sse"
+    mcp_path = "/mcp"  # mcp-proxy always serves streamablehttp at /mcp regardless of MCP_PROXY_TRANSPORT
 
     # Optionally manage mcp-proxy ourselves (skip when systemd handles it)
     proxy = None
