@@ -8,5 +8,5 @@
 
 - **grep before u move anything** - see rule #3. seriously. do it.
 - **Makefile is ur friend** - maintain, review, and leverage for frequent operations
-- **Makefile is ur tool** - check `make help` and/or `make salt-help` for more
+- **Makefile is ur tool** - check `make help`
 - **SUBMODULES** - do not `git add` blindly, submodules are documented in `CONTRIBUTING.md` and `README.md`
