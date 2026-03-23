@@ -1,0 +1,11 @@
+[Unit]
+Description=Tunnel watchdog — checks all gateway.json tunnels and restarts unhealthy ones
+After=network.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=-%E/systemd/user/tunnel-watchdog.conf
+EnvironmentFile=-/etc/mnemo/mcp-secrets.conf
+EnvironmentFile=-/etc/mnemo/tunnel-watchdog.conf
+ExecStart=python3 /etc/mnemo/tunnel-watchdog.py
+Environment=WATCHDOG_LABEL_SERVICES=

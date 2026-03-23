@@ -60,6 +60,20 @@ systemd-run --quiet --machine=mnemo@.host --user --collect --pipe --wait sh -c '
   cp -v ~/git/mnemo/deploy/memory.conf            /etc/mnemo/memory.conf
   cp -v ~/git/mnemo/deploy/tool-cache.conf        /etc/mnemo/tool-cache.conf
   cp -v ~/git/mnemo/deploy/hearth.conf            /etc/mnemo/hearth.conf
+  cp -v ~/git/mnemo/deploy/tunnel-watchdog.conf   /etc/mnemo/tunnel-watchdog.conf
+'
+```
+
+## watchdog
+
+```shell
+# script → /etc/mnemo/
+cp -v ~/git/mnemo/deploy/tunnel-watchdog.py /etc/mnemo/tunnel-watchdog.py
+
+# service + timer → mnemo's systemd user dir
+systemd-run --quiet --machine=mnemo@.host --user --collect --pipe --wait sh -c '
+  cp -v ~/git/mnemo/deploy/tunnel-watchdog.service ~/.config/systemd/user/tunnel-watchdog.service
+  cp -v ~/git/mnemo/deploy/tunnel-watchdog.timer   ~/.config/systemd/user/tunnel-watchdog.timer
 '
 ```
 
@@ -86,6 +100,7 @@ systemd-run --quiet --machine=mnemo@.host --user --collect --pipe --wait sh -c '
   systemctl --user enable --now memory@2082
   systemctl --user enable --now tool-cache@2088
   systemctl --user enable --now hearth
+  systemctl --user enable --now tunnel-watchdog.timer
 '
 ```
 
