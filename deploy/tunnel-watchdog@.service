@@ -1,0 +1,15 @@
+[Unit]
+Description=Tunnel watchdog — restarts gateway@%i if tunnel is down
+After=gateway@%i.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c '\
+  url=$(python3 -c "import json; d=json.load(open(\"/etc/mnemo/gateway.json\")); print(next(s[\"url\"] for s in d[\"servers\"] if \"desktop-commander\" in s[\"label\"]))") && \
+  code=$(curl -sf -o /dev/null -w "%%{http_code}" --max-time 5 "$url" 2>/dev/null || echo "000") && \
+  if [ "$code" = "530" ] || [ "$code" = "000" ]; then \
+    echo "tunnel unhealthy (HTTP $code) — restarting gateway@%i"; \
+    systemctl --user restart gateway@%i; \
+  else \
+    echo "tunnel ok (HTTP $code)"; \
+  fi'
